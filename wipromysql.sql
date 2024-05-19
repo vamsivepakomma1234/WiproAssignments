@@ -7,7 +7,7 @@ desc emp;
  select empno,ename  from emp;
  
  
- 
+ select * from emp where empno='7369';
  
  
  select empno,ename EmployeeName from emp;
