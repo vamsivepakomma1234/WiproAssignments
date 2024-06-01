@@ -1,0 +1,56 @@
+
+
+Task 2: Linked List Middle Element Search
+You are given a singly linked list. Write a function to find the middle element without using any extra space and only one traversal through the linked list.
+
+Solution:
+
+class ListNode {
+    int val;
+    ListNode next;
+
+    ListNode(int x) {
+        val = x;
+        next = null;
+    }
+}
+
+public class Solution {
+    public int findMiddleElement(ListNode head) {
+        if (head == null)
+            return -1; // or throw an exception
+
+        ListNode slowPtr = head;
+        ListNode fastPtr = head;
+
+        while (fastPtr != null && fastPtr.next != null) {
+            slowPtr = slowPtr.next;
+            fastPtr = fastPtr.next.next;
+        }
+
+        return slowPtr.val;
+    }
+
+    // Example usage:
+    public static void main(String[] args) {
+        // Create a sample linked list
+        ListNode head = new ListNode(1);
+        head.next = new ListNode(2);
+        head.next.next = new ListNode(3);
+        head.next.next.next = new ListNode(4);
+        head.next.next.next.next = new ListNode(5);
+
+        // Find the middle element
+        Solution solution = new Solution();
+        int middleElement = solution.findMiddleElement(head);
+        System.out.println("Middle Element: " + middleElement);
+    }
+}
+```
+
+Output:
+```
+Middle Element: 3
+```
+
+In this output, the middle element of the linked list `1 -> 2 -> 3 -> 4 -> 5` is `3`.

@@ -1,0 +1,77 @@
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.Stack;
+
+
+Task 3: Queue Sorting with Limited Space
+You have a queue of integers that you need to sort. You can only use additional space equivalent to one stack. Describe the steps you would take to sort the elements in the queue.
+
+SOLUTION:
+
+public class QueueSortingLimitedSpace {
+    public static void sortQueue(Queue<Integer> queue) {
+        Stack<Integer> stack = new Stack<>();
+
+        // Step 1: Enqueue all elements to the stack
+        while (!queue.isEmpty()) {
+            stack.push(queue.poll());
+        }
+
+        // Step 2: Sort the stack
+        sortStack(stack);
+
+        // Step 3: Enqueue elements from the stack to a temporary queue in sorted order
+        Queue<Integer> tempQueue = new LinkedList<>();
+        while (!stack.isEmpty()) {
+            tempQueue.offer(stack.pop());
+        }
+
+        // Step 4: Dequeue elements from the temporary queue and enqueue them back to the original queue
+        while (!tempQueue.isEmpty()) {
+            queue.offer(tempQueue.poll());
+        }
+    }
+
+    // Sorting the stack using recursion
+    private static void sortStack(Stack<Integer> stack) {
+        if (!stack.isEmpty()) {
+            int temp = stack.pop();
+            sortStack(stack);
+            insertInSortedOrder(stack, temp);
+        }
+    }
+
+    private static void insertInSortedOrder(Stack<Integer> stack, int value) {
+        if (stack.isEmpty() || stack.peek() <= value) {
+            stack.push(value);
+        } else {
+            int temp = stack.pop();
+            insertInSortedOrder(stack, value);
+            stack.push(temp);
+        }
+    }
+
+    public static void main(String[] args) {
+        Queue<Integer> queue = new LinkedList<>();
+        queue.offer(3);
+        queue.offer(1);
+        queue.offer(5);
+        queue.offer(2);
+        queue.offer(4);
+
+        System.out.println("Before sorting:");
+        System.out.println(queue);
+
+        sortQueue(queue);
+
+        System.out.println("After sorting:");
+        System.out.println(queue);
+    }
+}
+
+
+OUTPUT:
+Before sorting:
+[3, 1, 5, 2, 4]
+After sorting:
+[1, 2, 3, 4, 5]

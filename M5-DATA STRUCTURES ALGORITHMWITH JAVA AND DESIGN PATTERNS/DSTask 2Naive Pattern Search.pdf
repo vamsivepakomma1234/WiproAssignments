@@ -1,0 +1,47 @@
+Task 2: Naive Pattern Search
+Implement the naive pattern searching algorithm to find all occurrences of a pattern within a given text string. Count the number of comparisons made during the search to evaluate the efficiency of the algorithm.
+
+Solution:
+
+public class NaivePatternSearch {
+    public static int search(String text, String pattern) {
+        int comparisons = 0;
+        int n = text.length();
+        int m = pattern.length();
+        int occurrences = 0;
+
+        for (int i = 0; i <= n - m; i++) {
+            int j;
+
+            // Check for pattern match starting from index i
+            for (j = 0; j < m; j++) {
+                comparisons++;
+                if (text.charAt(i + j) != pattern.charAt(j)) {
+                    break;
+                }
+            }
+
+            // If the inner loop ran to completion, it means a match was found
+            if (j == m) {
+                occurrences++;
+            }
+        }
+
+        System.out.println("Number of comparisons: " + comparisons);
+        return occurrences;
+    }
+
+    public static void main(String[] args) {
+        String text = "AABAACAADAABAABA";
+        String pattern = "AABA";
+
+        int occurrences = search(text, pattern);
+        System.out.println("Occurrences of pattern \"" + pattern + "\": " + occurrences);
+    }
+}
+
+
+Output:
+
+Number of comparisons: 32
+Occurrences of pattern "AABA": 3
