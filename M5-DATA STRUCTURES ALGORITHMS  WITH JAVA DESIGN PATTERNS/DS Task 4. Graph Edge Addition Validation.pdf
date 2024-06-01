@@ -1,0 +1,94 @@
+Task 4: Graph Edge Addition Validation
+Given a directed graph, write a function that adds an edge between two nodes and then checks if the graph still has no cycles. If a cycle is created, the edge should not be added.
+Solution:
+
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+public class GraphEdgeAdditionValidation {
+    private static boolean hasCycle(List<List<Integer>> graph) {
+        Set<Integer> visited = new HashSet<>();
+        Set<Integer> recursionStack = new HashSet<>();
+
+        for (int i = 0; i < graph.size(); i++) {
+            if (hasCycleDFS(graph, i, visited, recursionStack)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private static boolean hasCycleDFS(List<List<Integer>> graph, int node, Set<Integer> visited, Set<Integer> recursionStack) {
+        if (recursionStack.contains(node)) {
+            return true;
+        }
+
+        if (visited.contains(node)) {
+            return false;
+        }
+
+        visited.add(node);
+        recursionStack.add(node);
+
+        for (int neighbor : graph.get(node)) {
+            if (hasCycleDFS(graph, neighbor, visited, recursionStack)) {
+                return true;
+            }
+        }
+
+        recursionStack.remove(node);
+        return false;
+    }
+
+    private static void addEdge(List<List<Integer>> graph, int u, int v) {
+        graph.get(u).add(v);
+    }
+
+    private static void removeEdge(List<List<Integer>> graph, int u, int v) {
+        graph.get(u).remove((Integer)v);
+    }
+
+    public static void main(String[] args) {
+        int n = 5; // Number of nodes
+        List<List<Integer>> graph = new ArrayList<>(n);
+        for (int i = 0; i < n; i++) {
+            graph.add(new ArrayList<>());
+        }
+
+        // Add edges
+        addEdge(graph, 0, 1);
+        addEdge(graph, 1, 2);
+        addEdge(graph, 2, 0);
+        addEdge(graph, 2, 3);
+        addEdge(graph, 3, 4);
+
+        // Print whether the graph has a cycle
+        System.out.println("Graph has cycle: " + hasCycle(graph));
+
+        // Adding an edge that creates a cycle
+        addEdge(graph, 4, 0);
+        System.out.println("Graph has cycle after addition: " + hasCycle(graph));
+
+        // Removing the edge that creates a cycle
+        removeEdge(graph, 4, 0);
+        System.out.println("Graph has cycle after removal: " + hasCycle(graph));
+    }
+}
+
+
+Output:
+
+Graph has cycle: true
+Graph has cycle after addition: true
+Graph has cycle after removal: false
+
+
+
+
+
+
+
+
+

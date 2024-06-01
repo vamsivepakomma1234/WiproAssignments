@@ -1,0 +1,79 @@
+
+Task 5: Removing Duplicates from a Sorted Linked List
+A sorted linked list has been constructed with repeated elements. Describe an algorithm to remove all duplicates from the linked list efficiently.
+
+
+Solution:
+
+class ListNode {
+    int val;
+    ListNode next;
+
+    ListNode(int x) {
+        val = x;
+        next = null;
+    }
+}
+
+public class RemoveDuplicates {
+    public ListNode deleteDuplicates(ListNode head) {
+        ListNode current = head;
+
+        while (current != null && current.next != null) {
+            if (current.val == current.next.val) {
+                current.next = findNextDistinct(current);
+            }
+            current = current.next;
+        }
+
+        return head;
+    }
+
+    private ListNode findNextDistinct(ListNode node) {
+        int val = node.val;
+        while (node != null && node.val == val) {
+            node = node.next;
+        }
+        return node;
+    }
+
+    // Utility method to print the linked list
+    public void printList(ListNode head) {
+        ListNode current = head;
+        while (current != null) {
+            System.out.print(current.val + " ");
+            current = current.next;
+        }
+        System.out.println();
+    }
+
+    public static void main(String[] args) {
+        RemoveDuplicates solution = new RemoveDuplicates();
+
+        // Create a sorted linked list with duplicates
+        ListNode head = new ListNode(1);
+        head.next = new ListNode(1);
+        head.next.next = new ListNode(2);
+        head.next.next.next = new ListNode(2);
+        head.next.next.next.next = new ListNode(3);
+        head.next.next.next.next.next = new ListNode(4);
+        head.next.next.next.next.next.next = new ListNode(4);
+
+        System.out.println("Before removing duplicates:");
+        solution.printList(head);
+
+        // Remove duplicates
+        ListNode newHead = solution.deleteDuplicates(head);
+
+        System.out.println("After removing duplicates:");
+        solution.printList(newHead);
+    }
+}
+
+
+Output:
+
+Before removing duplicates:
+1 1 2 2 3 4 4 
+After removing duplicates:
+1 2 3 4 

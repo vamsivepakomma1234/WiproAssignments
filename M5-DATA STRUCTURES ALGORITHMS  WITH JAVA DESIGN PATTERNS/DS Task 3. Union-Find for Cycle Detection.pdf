@@ -1,0 +1,99 @@
+
+Task 3: Union-Find for Cycle Detection
+Write a Union-Find data structure with path compression. Use this data structure to detect a cycle in an undirected graph.
+
+Solution:
+
+import java.util.*;
+
+public class UnionFindCycleDetection {
+    static class Edge {
+        int source;
+        int destination;
+
+        public Edge(int source, int destination) {
+            this.source = source;
+            this.destination = destination;
+        }
+    }
+
+    static class UnionFind {
+        int[] parent;
+        int[] rank;
+
+        public UnionFind(int size) {
+            parent = new int[size];
+            rank = new int[size];
+            for (int i = 0; i < size; i++) {
+                parent[i] = i;
+            }
+        }
+
+        public int find(int x) {
+            if (parent[x] != x) {
+                parent[x] = find(parent[x]); // Path compression
+            }
+            return parent[x];
+        }
+
+        public void union(int x, int y) {
+            int rootX = find(x);
+            int rootY = find(y);
+
+            if (rootX == rootY) {
+                return;
+            }
+
+            if (rank[rootX] < rank[rootY]) {
+                parent[rootX] = rootY;
+            } else if (rank[rootX] > rank[rootY]) {
+                parent[rootY] = rootX;
+            } else {
+                parent[rootY] = rootX;
+                rank[rootX]++;
+            }
+        }
+    }
+
+    public static boolean hasCycle(List<Edge> edges, int numVertices) {
+        UnionFind unionFind = new UnionFind(numVertices);
+
+        for (Edge edge : edges) {
+            int sourceParent = unionFind.find(edge.source);
+            int destinationParent = unionFind.find(edge.destination);
+
+            // Check if adding the edge creates a cycle
+            if (sourceParent == destinationParent) {
+                return true; // Cycle detected
+            }
+
+            unionFind.union(sourceParent, destinationParent);
+        }
+
+        return false; // No cycle detected
+    }
+
+    public static void main(String[] args) {
+        // Example graph represented as a list of edges (source, destination)
+        List<Edge> edges = new ArrayList<>();
+        edges.add(new Edge(0, 1));
+        edges.add(new Edge(1, 2));
+        edges.add(new Edge(2, 3));
+        edges.add(new Edge(3, 0));
+
+        int numVertices = 4; // Number of vertices
+
+        // Check if the graph has a cycle
+        boolean hasCycle = hasCycle(edges, numVertices);
+        if (hasCycle) {
+            System.out.println("Graph has a cycle.");
+        } else {
+            System.out.println("Graph does not have a cycle.");
+        }
+    }
+}
+
+
+Output:
+
+Graph has a cycle.
