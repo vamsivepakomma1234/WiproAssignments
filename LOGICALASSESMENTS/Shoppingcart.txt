@@ -1,0 +1,133 @@
+
+1.Shopping Cart Using LinkedList
+
+
+import java.util.LinkedList;
+
+class ShoppingCart {
+    private LinkedList<String> cart;
+
+    public ShoppingCart() {
+        cart = new LinkedList<>();
+    }
+
+    public void addItem(String item) {
+        cart.add(item);
+    }
+
+    public void removeItem(String item) {
+        cart.remove(item);
+    }
+
+    public void viewCart() {
+        System.out.println("Items in the shopping cart:");
+        for (String item : cart) {
+            System.out.println(item);
+        }
+    }
+}
+
+2. Purchase History Using Stack
+
+The purchase history will be managed using a `Stack` of `LinkedList<String>` to store previous shopping carts. This allows saving the current cart and undoing the last purchase easily.
+
+
+import java.util.Stack;
+import java.util.LinkedList;
+
+class PurchaseHistory {
+    private Stack<LinkedList<String>> history;
+
+    public PurchaseHistory() {
+        history = new Stack<>();
+    }
+
+    public void saveCart(LinkedList<String> cart) {
+        history.push(cart);
+    }
+
+    public LinkedList<String> undoLastPurchase() {
+        if (!history.isEmpty()) {
+            return history.pop();
+        }
+        return new LinkedList<>(); // Return an empty cart if history is empty
+    }
+
+    public void viewPurchaseHistory() {
+        System.out.println("Purchase history:");
+        for (LinkedList<String> cart : history) {
+            for (String item : cart) {
+                System.out.print(item + " ");
+            }
+            System.out.println();
+        }
+    }
+}
+```
+
+3. Customer Service Requests Using Queue
+
+
+import java.util.Queue;
+import java.util.LinkedList;
+
+class CustomerService {
+    private Queue<String> serviceRequests;
+
+    public CustomerService() {
+        serviceRequests = new LinkedList<>();
+    }
+
+    public void addRequest(String request) {
+        serviceRequests.add(request);
+    }
+
+    public String processNextRequest() {
+        return serviceRequests.poll(); // Retrieves and removes the head of the queue
+    }
+
+    public void viewPendingRequests() {
+        System.out.println("Pending customer service requests:");
+        for (String request : serviceRequests) {
+            System.out.println(request);
+        }
+    }
+}
+
+
+
+public class ShoppingApp {
+    public static void main(String[] args) {
+        ShoppingCart cart = new ShoppingCart();
+        PurchaseHistory history = new PurchaseHistory();
+        CustomerService service = new CustomerService();
+
+        // Shopping cart operations
+        cart.addItem("Item 1");
+        cart.addItem("Item 2");
+        cart.viewCart();
+
+        // Purchase history operations
+        LinkedList<String> currentCart = new LinkedList<>();
+        currentCart.add("Item 1");
+        currentCart.add("Item 2");
+        history.saveCart(currentCart);
+        history.viewPurchaseHistory();
+
+        // Undo last purchase
+        LinkedList<String> lastPurchase = history.undoLastPurchase();
+        System.out.println("Last purchase undone:");
+        for (String item : lastPurchase) {
+            System.out.println(item);
+        }
+
+        // Customer service operations
+        service.addRequest("Issue with payment");
+        service.addRequest("Return request");
+        service.viewPendingRequests();
+
+        // Process next customer service request
+        System.out.println("Processing next request: " + service.processNextRequest());
+        service.viewPendingRequests();
+    }
+}

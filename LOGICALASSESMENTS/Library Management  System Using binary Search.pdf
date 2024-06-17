@@ -1,0 +1,130 @@
+
+
+class Book implements Comparable<Book> {
+    private String title;
+    private String author;
+    private String ISBN;
+
+    // Constructor
+    public Book(String title, String author, String ISBN) {
+        this.title = title;
+        this.author = author;
+        this.ISBN = ISBN;
+    }
+
+    // Getters and setters
+    public String getTitle() {
+        return title;
+    }
+
+    // Implementing Comparable interface based on book title
+    @Override
+    public int compareTo(Book other) {
+        return this.title.compareTo(other.title);
+    }
+
+    @Override
+    public String toString() {
+        return "Book{" +
+                "title='" + title + '\'' +
+                ", author='" + author + '\'' +
+                ", ISBN='" + ISBN + '\'' +
+                '}';
+    }
+}
+
+
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+class Library {
+    private List<Book> books;
+
+    // Constructor
+    public Library() {
+        this.books = new ArrayList<>();
+    }
+
+    // Add a book to the library
+    public void addBook(Book book) {
+        books.add(book);
+        Collections.sort(books); // Ensure books are sorted by title for binary search
+    }
+
+    // Remove a book from the library
+    public void removeBook(Book book) {
+        books.remove(book);
+    }
+
+    // Linear Search to find a book by title
+    public Book linearSearchByTitle(String title) {
+        for (Book book : books) {
+            if (book.getTitle().equalsIgnoreCase(title)) {
+                return book;
+            }
+        }
+        return null; // Book not found
+    }
+
+    // Binary Search to find a book by title
+    public Book binarySearchByTitle(String title) {
+        int low = 0;
+        int high = books.size() - 1;
+        while (low <= high) {
+            int mid = low + (high - low) / 2;
+            int cmp = books.get(mid).getTitle().compareToIgnoreCase(title);
+            if (cmp == 0) {
+                return books.get(mid); // Book found
+            } else if (cmp < 0) {
+                low = mid + 1; // Search in the right half
+            } else {
+                high = mid - 1; // Search in the left half
+            }
+        }
+        return null; // Book not found
+    }
+
+    // Display all books in the library
+    public void displayBooks() {
+        for (Book book : books) {
+            System.out.println(book);
+        }
+    }
+}
+
+public class LibraryManagementSystem {
+    public static void main(String[] args) {
+        Library library = new Library();
+
+        // Adding books to the library
+        library.addBook(new Book("Java Programming", "John Doe", "123456"));
+        library.addBook(new Book("Python for Beginners", "Jane Smith", "234567"));
+        library.addBook(new Book("Data Structures", "Alan Turing", "345678"));
+
+        // Display all books
+        System.out.println("All Books:");
+        library.displayBooks();
+        System.out.println();
+
+        // Search for a book using Linear Search
+        System.out.println("Searching 'Java Programming' using Linear Search:");
+        Book foundBookLinear = library.linearSearchByTitle("Java Programming");
+        if (foundBookLinear != null) {
+            System.out.println("Book found: " + foundBookLinear);
+        } else {
+            System.out.println("Book not found.");
+        }
+        System.out.println();
+
+        // Search for a book using Binary Search
+        System.out.println("Searching 'Python for Beginners' using Binary Search:");
+        Book foundBookBinary = library.binarySearchByTitle("Python for Beginners");
+        if (foundBookBinary != null) {
+            System.out.println("Book found: " + foundBookBinary);
+        } else {
+            System.out.println("Book not found.");
+        }
+    }
+}
