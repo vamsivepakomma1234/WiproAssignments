@@ -1,0 +1,103 @@
+package com.wipro.command;
+
+interface Command {
+    void execute();
+}
+
+// Receiver class for TV
+class TV {
+    void turnOn() {
+        System.out.println("TV is turned on");
+    }
+
+    void turnOff() {
+        System.out.println("TV is turned off");
+    }
+
+    void changeChannel(int channel) {
+        System.out.println("TV channel changed to " + channel);
+    }
+}
+
+// Concrete Command for turning on a device
+class TurnOnCommand implements Command {
+    private TV tv;
+
+    TurnOnCommand(TV tv) {
+        this.tv = tv;
+    }
+
+    @Override
+    public void execute() {
+        tv.turnOn();
+    }
+}
+
+// Concrete Command for turning off a device
+class TurnOffCommand implements Command {
+    private TV tv;
+
+    TurnOffCommand(TV tv) {
+        this.tv = tv;
+    }
+
+    @Override
+    public void execute() {
+        tv.turnOff();
+    }
+}
+
+// Concrete Command for changing channels on a TV
+class ChangeChannelCommand implements Command {
+    private TV tv;
+    private int channel;
+
+    ChangeChannelCommand(TV tv, int channel) {
+        this.tv = tv;
+        this.channel = channel;
+    }
+
+    @Override
+    public void execute() {
+        tv.changeChannel(channel);
+    }
+}
+
+// Invoker class
+class RemoteControl {
+    private Command command;
+
+    void setCommand(Command command) {
+        this.command = command;
+    }
+
+    void pressButton() {
+        command.execute();
+    }
+}
+
+// Client class
+public class Command1 {
+    public static void main(String[] args) {
+        // Create devices (receivers)
+        TV myTV = new TV();
+
+        // Create commands
+        Command turnOnTV = new TurnOnCommand(myTV);
+        Command turnOffTV = new TurnOffCommand(myTV);
+        Command changeChannel = new ChangeChannelCommand(myTV, 5);
+
+        // Create remote control (invoker)
+        RemoteControl remoteControl = new RemoteControl();
+
+        // Press buttons on remote control
+        remoteControl.setCommand(turnOnTV);
+        remoteControl.pressButton();
+
+        remoteControl.setCommand(changeChannel);
+        remoteControl.pressButton();
+
+        remoteControl.setCommand(turnOffTV);
+        remoteControl.pressButton();
+    }
+}
