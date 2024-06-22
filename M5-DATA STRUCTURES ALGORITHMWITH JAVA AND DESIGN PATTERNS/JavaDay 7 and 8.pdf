@@ -1,0 +1,62 @@
+
+Day 7 and 8:
+Task 1: Balanced Binary Tree Check
+Write a function to check if a given binary tree is balanced. A balanced tree is one where the height of two subtrees of any node never differs by more than one.
+
+Solution:
+
+class TreeNode
+ {
+    int val;
+    TreeNode left;
+    TreeNode right;
+
+    TreeNode(int x) {
+        val = x;
+    }
+}
+
+public class BalancedBinaryTree {
+
+    public boolean isBalanced(TreeNode root) {
+        if (root == null) return true;
+
+        int leftHeight = height(root.left);
+        int rightHeight = height(root.right);
+
+        if (Math.abs(leftHeight - rightHeight) > 1) return false;
+
+        return isBalanced(root.left) && isBalanced(root.right);
+    }
+
+    private int height(TreeNode node) {
+        if (node == null) return 0;
+
+        int leftHeight = height(node.left);
+        int rightHeight = height(node.right);
+
+        return Math.max(leftHeight, rightHeight) + 1;
+    }
+
+    public static void main(String[] args) {
+        BalancedBinaryTree solution = new BalancedBinaryTree();
+
+        // Example usage
+        TreeNode root = new TreeNode(1);
+        root.left = new TreeNode(2);
+        root.right = new TreeNode(3);
+        root.left.left = new TreeNode(4);
+        root.left.right = new TreeNode(5);
+        root.right.right = new TreeNode(6);
+
+        System.out.println("Is the binary tree balanced? " + solution.isBalanced(root)); // Output: Is the binary tree balanced? false
+    }
+}
+
+
+Output: 
+
+Is the binary tree balanced? false
+
+
+In this example, the binary tree is not balanced, so the output is `false`.

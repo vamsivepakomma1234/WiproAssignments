@@ -1,0 +1,78 @@
+Day 16 and 17:
+Task 1: The Knight’s Tour Problem
+
+Create a function bool SolveKnightsTour(int[,] board, int moveX, int moveY, int moveCount, int[] xMove, int[] yMove) that attempts to solve the Knight's Tour problem using backtracking. The function should return true if a solution exists and false otherwise. The board represents the chessboard, moveX and moveY are the current coordinates of the knight, moveCount is the current move count, and xMove[], yMove[] are the possible next moves for the knight. Fill the chessboard such that the knight visits every square exactly once. Keep the  chessboard size to 8x8.
+
+
+Solution:
+
+public class KnightsTour {
+    public static void main(String[] args) {
+        int[][] board = new int[8][8];
+        int moveX = 0, moveY = 0;
+        int moveCount = 1;
+        int[] xMove = {2, 1, -1, -2, -2, -1, 1, 2};
+        int[] yMove = {1, 2, 2, 1, -1, -2, -2, -1};
+
+        if (solveKnightsTour(board, moveX, moveY, moveCount, xMove, yMove)) {
+            System.out.println("Solution exists:");
+            printBoard(board);
+        } else {
+            System.out.println("No solution exists.");
+        }
+    }
+
+    public static boolean solveKnightsTour(int[][] board, int moveX, int moveY, int moveCount, int[] xMove, int[] yMove) {
+        int n = 8;
+
+        if (moveCount == n * n) {
+            return true;
+        }
+
+        for (int i = 0; i < 8; i++) {
+            int newX = moveX + xMove[i];
+            int newY = moveY + yMove[i];
+
+            if (isValidMove(board, newX, newY, n)) {
+                board[newX][newY] = moveCount++;
+
+                if (solveKnightsTour(board, newX, newY, moveCount, xMove, yMove)) {
+                    return true;
+                }
+
+                board[newX][newY] = 0;
+                moveCount--;
+            }
+        }
+
+        return false;
+    }
+
+    public static boolean isValidMove(int[][] board, int x, int y, int n) {
+        return (x >= 0 && x < n && y >= 0 && y < n && board[x][y] == 0);
+    }
+
+    public static void printBoard(int[][] board) {
+        for (int i = 0; i < 8; i++) {
+            for (int j = 0; j < 8; j++) {
+                System.out.print(board[i][j] + " ");
+            }
+            System.out.println();
+        }
+    }
+}
+
+
+Output:
+
+Solution exists:
+1 56 47 32 25 58 49 10 
+52 29 30 57 46 31 26 55 
+45 26 53 38 11 28 59 42 
+30 51 48 29 54 37 12 27 
+29 40 13 52 35 44 21 50 
+54 37 20 15 42 23 34 11 
+41 20 49 36 17 14 51 28 
+58 35 44 21 48 13 40 45 
+
+

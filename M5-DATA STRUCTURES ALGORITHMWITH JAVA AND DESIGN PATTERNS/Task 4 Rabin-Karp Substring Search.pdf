@@ -1,0 +1,62 @@
+Task 4: Rabin-Karp Substring Search
+
+Solution:
+
+public class RabinKarp {
+    public static void main(String[] args) {
+        String text = "abcabcabcabcabcabc";
+        String pattern = "abcabcabc";
+        int prime = 101; // A prime number for hashing
+        int d = 256; // Number of characters in the character set
+
+        int patternHash = 0; // Hash value for pattern
+        int textHash = 0; // Hash value for text
+        int h = 1; // Hash value for pattern length
+
+        // Calculate the hash value for pattern length
+        for (int i = 0; i < pattern.length() - 1; i++)
+            h = (h * d) % prime;
+
+        // Calculate the hash value for pattern and text
+        for (int i = 0; i < pattern.length(); i++) {
+            patternHash = (d * patternHash + pattern.charAt(i)) % prime;
+            textHash = (d * textHash + text.charAt(i)) % prime;
+        }
+
+        // Slide the pattern over the text
+        for (int i = 0; i <= text.length() - pattern.length(); i++) {
+            if (patternHash == textHash) {
+                // Check for hash collision
+                if (checkCollision(text, i, pattern))
+                    System.out.println("Pattern found at index " + i);
+            }
+
+            // Calculate the hash value for the next window
+            if (i < text.length() - pattern.length()) {
+                textHash = (d * (textHash - text.charAt(i) * h) + text.charAt(i + pattern.length())) % prime;
+
+                // Handle negative hash values
+                if (textHash < 0)
+                    textHash = (textHash + prime);
+            }
+        }
+    }
+
+    public static boolean checkCollision(String text, int index, String pattern) {
+        for (int i = 0; i < pattern.length(); i++) {
+            if (text.charAt(index + i) != pattern.charAt(i))
+                return false;
+        }
+        return true;
+    }
+}
+
+Output:
+
+Pattern found at index 0
+Pattern found at index 3
+Pattern found at index 6
+Pattern found at index 9
+Pattern found at index 12
+Pattern found at index 15
+

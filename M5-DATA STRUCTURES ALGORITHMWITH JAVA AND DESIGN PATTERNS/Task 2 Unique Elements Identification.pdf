@@ -1,0 +1,38 @@
+
+Task 2: Unique Elements Identification
+Given an array of integers where every element appears twice except for two, write a function that efficiently finds these two non-repeating elements using bitwise XOR operations.
+
+Solution:
+
+
+public class UniqueElements {
+    public static void main(String[] args) {
+        int[] arr = {2, 4, 3, 5, 2, 4, 6, 3};
+        int[] result = findUniqueElements(arr);
+        System.out.println("The two non-repeating elements are: " + result[0] + " and " + result[1]);
+    }
+
+    public static int[] findUniqueElements(int[] arr) {
+        int xor = 0;
+        for (int num : arr) {
+            xor ^= num;
+        }
+
+        int rightmostSetBit = xor & ~(xor - 1);
+        int x = 0, y = 0;
+        for (int num : arr) {
+            if ((num & rightmostSetBit) != 0) {
+                x ^= num;
+            } else {
+                y ^= num;
+            }
+        }
+        return new int[]{x, y};
+    }
+}
+
+
+Output:
+
+The two non-repeating elements are: 5 and 6
+

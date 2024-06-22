@@ -1,0 +1,81 @@
+Task 2: Rat in a Maze
+Implement a function bool SolveMaze(int[,] maze) that uses backtracking to find a path from the top left corner to the bottom right corner of a maze. The  maze is represented by a 2D array where 1s are paths and 0s are walls. Find a rat's path through the maze. The maze size is 6x6.
+
+Solution:
+
+
+public class RatInMaze {
+    public static void main(String[] args) {
+        int[][] maze = {
+            {1, 1, 1, 1, 1, 1},
+            {1, 0, 0, 0, 0, 1},
+            {1, 1, 1, 1, 0, 1},
+            {1, 0, 0, 0, 0, 1},
+            {1, 1, 1, 1, 1, 1},
+            {1, 0, 0, 0, 0, 1}
+        };
+
+        if (solveMaze(maze)) {
+            System.out.println("Path found:");
+            printMaze(maze);
+        } else {
+            System.out.println("No path found.");
+        }
+    }
+
+    public static boolean solveMaze(int[][] maze) {
+        int[][] sol = new int[6][6];
+        return solveMazeUtil(maze, sol, 0, 0);
+    }
+
+    public static boolean solveMazeUtil(int[][] maze, int[][] sol, int x, int y) {
+        if (x == 5 && y == 5) {
+            sol[x][y] = 1;
+            return true;
+        }
+
+        if (maze[x][y] == 1 && sol[x][y] == 0) {
+            sol[x][y] = 1;
+
+            if (solveMazeUtil(maze, sol, x + 1, y)) {
+                return true;
+            }
+            if (solveMazeUtil(maze, sol, x, y + 1)) {
+                return true;
+            }
+            if (x > 0 && solveMazeUtil(maze, sol, x - 1, y)) {
+                return true;
+            }
+            if (y > 0 && solveMazeUtil(maze, sol, x, y - 1)) {
+                return true;
+            }
+
+            sol[x][y] = 0;
+            return false;
+        }
+
+        return false;
+    }
+
+    public static void printMaze(int[][] maze) {
+        for (int i = 0; i < 6; i++) {
+            for (int j = 0; j < 6; j++) {
+                System.out.print(maze[i][j] + " ");
+            }
+            System.out.println();
+        }
+    }
+}
+
+
+Output:
+
+Path found:
+1 1 1 1 1 1 
+1 0 0 0 0 1 
+1 1 1 1 0 1 
+1 0 0 0 0 1 
+1 1 1 1 1 1 
+1 0 0 0 0 1 
+
+

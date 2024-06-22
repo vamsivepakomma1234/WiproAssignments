@@ -1,0 +1,67 @@
+Task 2: Traveling Salesman Problem
+Create a function int FindMinCost(int[,] graph) that takes a 2D array representing the graph where graph[i][j] is the cost to travel from city i to city j. The function should return the minimum cost to visit all cities and return to the starting city. Use dynamic programming for this solution.
+
+
+Solution:
+
+
+
+Here is the Java solution for the Traveling Salesman Problem:
+
+
+public class TravelingSalesman {
+    public static void main(String[] args) {
+        int[][] graph = {
+            {0, 10, 15, 20},
+            {10, 0, 35, 25},
+            {15, 35, 0, 30},
+            {20, 25, 30, 0}
+        };
+        int minCost = findMinCost(graph);
+        System.out.println("Minimum cost: " + minCost);
+    }
+
+    public static int findMinCost(int[][] graph) {
+        int n = graph.length;
+        int[][] dp = new int[1 << n][n];
+
+        // Initialize the dp array
+        for (int i = 0; i < (1 << n); i++) {
+            for (int j = 0; j < n; j++) {
+                dp[i][j] = Integer.MAX_VALUE;
+            }
+        }
+
+        // Base case: starting city
+        for (int i = 0; i < n; i++) {
+            dp[1 << i][i] = 0;
+        }
+
+        // Fill up the dp array
+        for (int mask = 1; mask < (1 << n); mask++) {
+            for (int i = 0; i < n; i++) {
+                if (((mask >> i) & 1) == 0) continue;
+                for (int j = 0; j < n; j++) {
+                    if (i != j && ((mask >> j) & 1) != 0) {
+                        dp[mask][i] = Math.min(dp[mask][i], dp[mask ^ (1 << i)][j] + graph[j][i]);
+                    }
+                }
+            }
+        }
+
+        // Find the minimum cost
+        int minCost = Integer.MAX_VALUE;
+        for (int i = 0; i < n; i++) {
+            minCost = Math.min(minCost, dp[(1 << n) - 1][i] + graph[i][0]);
+        }
+
+        return minCost;
+    }
+}
+
+
+Output:
+
+Minimum cost: 80
+
+

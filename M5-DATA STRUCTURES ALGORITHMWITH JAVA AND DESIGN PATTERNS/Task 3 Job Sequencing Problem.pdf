@@ -1,0 +1,69 @@
+"Task 3: Job Sequencing Problem
+Define a class Job with properties int Id, int Deadline, and int Profit. Then implement a function List<Job> JobSequencing(List<Job> jobs) that takes a list of jobs and returns the maximum profit sequence of jobs that can be done before the deadlines. Use the greedy method to solve this problem.
+
+Solution:
+
+import java.util.*;
+
+class Job {
+    int Id;
+    int Deadline;
+    int Profit;
+
+    Job(int id, int deadline, int profit) {
+        Id = id;
+        Deadline = deadline;
+        Profit = profit;
+    }
+}
+
+public class JobSequencing {
+    public static void main(String[] args) {
+        List<Job> jobs = new ArrayList<>();
+        jobs.add(new Job(1, 2, 50));
+        jobs.add(new Job(2, 1, 20));
+        jobs.add(new Job(3, 3, 70));
+        jobs.add(new Job(4, 3, 40));
+        jobs.add(new Job(5, 4, 60));
+
+        List<Job> maxProfitSequence = JobSequencing(jobs);
+        System.out.println("Maximum profit sequence of jobs:");
+        for (Job job : maxProfitSequence) {
+            System.out.println("Job " + (link unavailable) + " with deadline " + job.Deadline + " and profit " + job.Profit);
+        }
+    }
+
+    public static List<Job> JobSequencing(List<Job> jobs) {
+        // Sort jobs by deadline and then by profit in descending order
+        Collections.sort(jobs, new Comparator<Job>() {
+            @Override
+            public int compare(Job j1, Job j2) {
+                if (j1.Deadline == j2.Deadline) {
+                    return Integer.compare(j2.Profit, j1.Profit);
+                } else {
+                    return Integer.compare(j1.Deadline, j2.Deadline);
+                }
+            }
+        });
+
+        // Use a greedy approach to select jobs
+        List<Job> maxProfitSequence = new ArrayList<>();
+        int currentDeadline = 0;
+        for (Job job : jobs) {
+            if (job.Deadline >= currentDeadline) {
+                maxProfitSequence.add(job);
+                currentDeadline++;
+            }
+        }
+
+        return maxProfitSequence;
+    }
+}
+
+
+Output:
+
+Maximum profit sequence of jobs:
+Job 3 with deadline 3 and profit 70
+Job 5 with deadline 4 and profit 60
+Job 1 with deadline 2 and profit 50

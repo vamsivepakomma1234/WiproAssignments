@@ -1,0 +1,41 @@
+Day 13 and 14:
+Task 1: Tower of Hanoi Solver
+Create a program that solves the Tower of Hanoi puzzle for n disks. The solution should use recursion to move disks between three pegs (source, auxiliary, and destination) according to the game's rules. The program should print out each move required to solve the puzzle.
+
+Solution:
+
+public class TowerOfHanoi {
+    public static void main(String[] args) {
+        int n = 3; // number of disks
+        solveTowerOfHanoi(n, 'A', 'C', 'B');
+    }
+
+    public static void solveTowerOfHanoi(int n, char source, char destination, char auxiliary) {
+        if (n == 1) {
+            System.out.println("Move disk 1 from peg " + source + " to peg " + destination);
+            return;
+        }
+
+        // Move n - 1 disks from source to auxiliary, using destination as temporary peg
+        solveTowerOfHanoi(n - 1, source, auxiliary, destination);
+
+        // Move the nth disk from source to destination
+        System.out.println("Move disk " + n + " from peg " + source + " to peg " + destination);
+
+        // Move the n - 1 disks from auxiliary to destination, using source as temporary peg
+        solveTowerOfHanoi(n - 1, auxiliary, destination, source);
+    }
+}
+
+
+Output:
+
+Move disk 1 from peg A to peg C
+Move disk 2 from peg A to peg B
+Move disk 1 from peg C to peg B
+Move disk 3 from peg A to peg C
+Move disk 1 from peg B to peg A
+Move disk 2 from peg B to peg C
+Move disk 1 from peg A to peg C
+
+
