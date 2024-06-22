@@ -1,0 +1,76 @@
+Assignment 1: Implement a navigation bar using an unordered list with links to different sections of your HTML page. Use CSS to style the list as a horizontal menu and highlight the current page or section.
+
+
+Solution:
+
+
+
+HTML:
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Navigation Bar</title>
+	<link rel="stylesheet" href="style.css">
+</head>
+<body>
+	<nav>
+		<ul>
+			<li><a href="#home">Home</a></li>
+			<li><a href="#about">About</a></li>
+			<li><a href="#services">Services</a></li>
+			<li><a href="#contact">Contact</a></li>
+		</ul>
+	</nav>
+	<section id="home">Home Section</section>
+	<section id="about">About Section</section>
+	<section id="services">Services Section</section>
+	<section id="contact">Contact Section</section>
+</body>
+</html>
+
+CSS (in style.css file):
+
+nav ul {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	display: flex;
+	justify-content: space-between;
+	background-color: #333;
+	color: #fff;
+}
+
+nav li {
+	margin-right: 20px;
+}
+
+nav a {
+	color: #fff;
+	text-decoration: none;
+}
+
+nav a:hover {
+	background-color: #444;
+	color: #fff;
+}
+
+nav a.active {
+	background-color: #666;
+	color: #fff;
+}
+
+JavaScript (optional):
+
+const sections = document.querySelectorAll('section');
+const navLinks = document.querySelectorAll('nav a');
+
+navLinks.forEach((link, index) => {
+	link.addEventListener('click', () => {
+		sections.forEach((section) => {
+			section.classList.remove('active');
+		});
+		sections[index].classList.add('active');
+	});
+});
+

@@ -1,0 +1,89 @@
+Assignment 3: Apply the CSS box model to ensure that your page content has appropriate margins and padding. Create a layout using div tags and style them to arrange content in a multi-column format using floats or flexbox.
+
+
+Solution:
+
+
+
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>CSS Box Model and Multi-Column Layout</title>
+	<link rel="stylesheet" href="style.css">
+</head>
+<body>
+	<div class="container">
+		<div class="header">Header</div>
+		<div class="nav">Nav</div>
+		<div class="main">
+			<div class="column1">Column 1</div>
+			<div class="column2">Column 2</div>
+			<div class="column3">Column 3</div>
+		</div>
+		<div class="footer">Footer</div>
+	</div>
+</body>
+</html>
+
+CSS (in style.css file):
+
+* {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+}
+
+.container {
+	max-width: 1200px;
+	margin: 0 auto;
+	padding: 20px;
+}
+
+.header {
+	background-color: #333;
+	color: #fff;
+	padding: 20px;
+	text-align: center;
+}
+
+.nav {
+	background-color: #444;
+	color: #fff;
+	padding: 20px;
+	text-align: center;
+}
+
+.main {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+}
+
+.column1, .column2, .column3 {
+	width: 30%;
+	margin: 20px;
+	padding: 20px;
+	background-color: #eee;
+}
+
+.column1 {
+	order: 1;
+}
+
+.column2 {
+	order: 2;
+}
+
+.column3 {
+	order: 3;
+}
+
+.footer {
+	background-color: #333;
+	color: #fff;
+	padding: 20px;
+	text-align: center;
+	clear: both;
+}
+

@@ -1,0 +1,81 @@
+Assignment 4: Enhance the page by adding CSS3 animations to the menu and form elements. Also, use media queries to make the page responsive, ensuring it looks good on both desktop and mobile screen sizes.
+
+
+Solution:
+
+CSS (additions to style.css file):
+
+nav ul {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	display: flex;
+	justify-content: space-between;
+	background-color: #333;
+	color: #fff;
+	animation: slide-in 0.5s forwards;
+}
+
+nav li {
+	margin-right: 20px;
+}
+
+nav a {
+	color: #fff;
+	text-decoration: none;
+	animation: fade-in 0.5s forwards;
+}
+
+nav a:hover {
+	background-color: #444;
+	color: #fff;
+	animation: pulse 0.5s infinite;
+}
+
+form {
+	animation: slide-in 0.5s forwards;
+}
+
+input[type="submit"] {
+	animation: pulse 0.5s infinite;
+}
+
+@media only screen and (max-width: 768px) {
+	.main {
+		flex-direction: column;
+	}
+	.column1, .column2, .column3 {
+		width: 100%;
+	}
+}
+
+@keyframes slide-in {
+	0% {
+		transform: translateX(-100%);
+	}
+	100% {
+		transform: translateX(0);
+	}
+}
+
+@keyframes fade-in {
+	0% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 1;
+	}
+}
+
+@keyframes pulse {
+	0% {
+		transform: scale(1);
+	}
+	50% {
+		transform: scale(1.1);
+	}
+	100% {
+		transform: scale(1);
+	}
+}
+
