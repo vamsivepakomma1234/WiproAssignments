@@ -1,0 +1,42 @@
+Assignment 2: Use regular expressions in JavaScript to validate the email address entered in the form. It should check for the correct format of the email and display a message to the user if the format is incorrect.
+
+Solution:
+// Create a user object
+let user = {
+  name: "John Doe",
+  email: "johndoe@example.com",
+  age: 30
+};
+
+// Function to change the name
+function changeName(newName) {
+  user.name = newName;
+}
+
+// Function to update the email
+function updateEmail(newEmail) {
+  user.email = newEmail;
+}
+
+// Function to calculate the birth year
+function calculateBirthYear() {
+  let currentYear = new Date().getFullYear();
+  return currentYear - user.age;
+}
+
+// Test the functions
+changeName("Jane Doe");
+updateEmail("janedoe@example.com");
+console.log(user);
+console.log("Birth year: " + calculateBirthYear());
+
+
+Output:
+
+
+{
+  name: "Jane Doe",
+  email: "janedoe@example.com",
+  age: 30
+}
+Birth year: 1992
