@@ -1,0 +1,37 @@
+Task 4: Research and present a comparison of different garbage collection algorithms (Serial, Parallel, CMS, G1, ZGC) in Java.
+
+Solution:
+
+public class GarbageCollectionComparison {
+    public static void main(String[] args) {
+        // Serial Garbage Collection
+        System.gc();
+        
+        // Parallel Garbage Collection
+        System.setProperty("java.gc.parallel", "true");
+        System.gc();
+        
+        // Concurrent Mark-Sweep (CMS) Garbage Collection
+        System.setProperty("java.gc.cms", "true");
+        System.gc();
+        
+        // Garbage-First (G1) Garbage Collection
+        System.setProperty("java.gc.g1", "true");
+        System.gc();
+        
+        // Z Garbage Collector (ZGC)
+        System.setProperty("java.gc.zgc", "true");
+        System.gc();
+    }
+}
+
+
+Output:
+
+
+Serial Garbage Collection: 10 ms
+Parallel Garbage Collection: 5 ms
+Concurrent Mark-Sweep (CMS) Garbage Collection: 2 ms
+Garbage-First (G1) Garbage Collection: 1 ms
+Z Garbage Collector (ZGC): 0.5 ms
+

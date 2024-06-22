@@ -1,0 +1,54 @@
+Day 23:
+Task 1: Singleton
+Implement a Singleton class that manages database connections. Ensure the class adheres strictly to the singleton pattern principles.
+
+
+Solution:
+
+public class DatabaseConnectionSingleton {
+    private static DatabaseConnectionSingleton instance;
+    private Connection connection;
+
+    private DatabaseConnectionSingleton() {
+        // Initialize database connection
+        connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/mydb", "username", "password");
+    }
+
+    public static DatabaseConnectionSingleton getInstance() {
+        if (instance == null) {
+            instance = new DatabaseConnectionSingleton();
+        }
+        return instance;
+    }
+
+    public Connection getConnection() {
+        return connection;
+    }
+
+    public void closeConnection() {
+        try {
+            connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        DatabaseConnectionSingleton db1 = DatabaseConnectionSingleton.getInstance();
+        DatabaseConnectionSingleton db2 = DatabaseConnectionSingleton.getInstance();
+
+        System.out.println(db1 == db2); // true
+
+        db1.closeConnection();
+    }
+}
+
+
+Output:
+
+
+true
+
+

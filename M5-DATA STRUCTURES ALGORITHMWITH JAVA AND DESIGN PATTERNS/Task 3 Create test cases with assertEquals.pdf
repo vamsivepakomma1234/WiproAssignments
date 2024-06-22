@@ -1,0 +1,59 @@
+Task 3: Create test cases with assertEquals, assertTrue, and assertFalse to validate the correctness of a custom String utility class.
+
+Solution:
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+
+public class StringUtilityTest {
+
+    @Test
+    public void testIsNullOrEmpty() {
+        assertTrue(StringUtility.isNullOrEmpty(null));
+        assertTrue(StringUtility.isNullOrEmpty(""));
+        assertFalse(StringUtility.isNullOrEmpty("Hello"));
+    }
+
+    @Test
+    public void testReverse() {
+        assertEquals("olleH", StringUtility.reverse("Hello"));
+        assertEquals("", StringUtility.reverse(""));
+        assertEquals(null, StringUtility.reverse(null));
+    }
+
+    @Test
+    public void testContains() {
+        assertTrue(StringUtility.contains("Hello World", "World"));
+        assertFalse(StringUtility.contains("Hello World", "Universe"));
+        assertFalse(StringUtility.contains(null, "World"));
+    }
+}
+
+class StringUtility {
+    public static boolean isNullOrEmpty(String str) {
+        return str == null || str.isEmpty();
+    }
+
+    public static String reverse(String str) {
+        if (str == null) {
+            return null;
+        }
+        return new StringBuilder(str).reverse().toString();
+    }
+
+    public static boolean contains(String str, String substring) {
+        if (str == null) {
+            return false;
+        }
+        return str.contains(substring);
+    }
+}
+
+
+Output:
+
+
+All tests passed!
+
+

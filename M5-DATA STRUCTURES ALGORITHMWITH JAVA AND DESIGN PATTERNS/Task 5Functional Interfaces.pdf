@@ -1,0 +1,62 @@
+Task 5: Functional Interfaces
+Create a method that accepts functions as parameters using Predicate, Function, Consumer, and Supplier interfaces to operate on a Person object.
+
+Solution:
+
+import java.util.function.Consumer;
+import java.util.function.Function;
+import java.util.function.Predicate;
+import java.util.function.Supplier;
+
+class Person {
+	String name;
+	int age;
+
+	public Person(String name, int age) {
+		this.name = name;
+		this.age = age;
+	}
+
+	public String toString() {
+		return "Person{" +
+				"name='" + name + '\'' +
+				", age=" + age +
+				'}';
+	}
+}
+
+public class FunctionalInterfaces {
+	public static void main(String[] args) {
+		Person person = new Person("John", 30);
+
+		// Using Predicate interface
+		Predicate<Person> predicate = p -> p.age > 18;
+		boolean result = predicate.test(person);
+		System.out.println("Is person older than 18? " + result);
+
+		// Using Function interface
+		Function<Person, String> function = p -> "Hello, " + p.name;
+		String greeting = function.apply(person);
+		System.out.println(greeting);
+
+		// Using Consumer interface
+		Consumer<Person> consumer = p -> System.out.println("Name: " + p.name + ", Age: " + p.age);
+		consumer.accept(person);
+
+		// Using Supplier interface
+		Supplier<Person> supplier = () -> new Person("Jane", 25);
+		Person newPerson = supplier.get();
+		System.out.println(newPerson);
+	}
+}
+
+
+Output:
+
+
+Is person older than 18? true
+Hello, John
+Name: John, Age: 30
+Person{name='Jane', age=25}
+
+

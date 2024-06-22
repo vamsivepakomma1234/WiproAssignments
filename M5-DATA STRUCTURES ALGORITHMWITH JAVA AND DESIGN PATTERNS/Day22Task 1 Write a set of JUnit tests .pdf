@@ -1,0 +1,60 @@
+Day 22:
+Task 1: Write a set of JUnit tests for a given class with simple mathematical operations (add, subtract, multiply, divide) using the basic @Test annotation.
+Here is a solution with output for Day 22: Task 1:
+
+Solution:
+
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+public class MathOperationsTest {
+
+    @Test
+    public void testAdd() {
+        MathOperations mathOperations = new MathOperations();
+        assertEquals(4, mathOperations.add(2, 2));
+    }
+
+    @Test
+    public void testSubtract() {
+        MathOperations mathOperations = new MathOperations();
+        assertEquals(0, mathOperations.subtract(2, 2));
+    }
+
+    @Test
+    public void testMultiply() {
+        MathOperations mathOperations = new MathOperations();
+        assertEquals(4, mathOperations.multiply(2, 2));
+    }
+
+    @Test
+    public void testDivide() {
+        MathOperations mathOperations = new MathOperations();
+        assertEquals(1, mathOperations.divide(2, 2));
+    }
+}
+
+class MathOperations {
+    int add(int a, int b) {
+        return a + b;
+    }
+
+    int subtract(int a, int b) {
+        return a - b;
+    }
+
+    int multiply(int a, int b) {
+        return a * b;
+    }
+
+    int divide(int a, int b) {
+        return a / b;
+    }
+}
+
+
+Output:
+
+
+All tests passed!
+

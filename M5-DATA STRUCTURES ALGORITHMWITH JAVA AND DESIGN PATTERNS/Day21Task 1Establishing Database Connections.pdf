@@ -1,0 +1,44 @@
+Day 21:
+Task 1: Establishing Database Connections
+Write a Java program that connects to a SQLite database and prints out the connection object to confirm successful connection.
+
+
+Solution:
+
+
+Here is a solution in Java with output for Day 21: Task 1:
+
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+
+public class SQLiteConnection {
+    public static void main(String[] args) {
+        // Database URL
+        String url = "jdbc:sqlite:test.db";
+
+        // Load SQLite JDBC driver
+        try {
+            Class.forName("org.sqlite.JDBC");
+        } catch (ClassNotFoundException e) {
+            System.out.println("SQLite JDBC driver not found.");
+            return;
+        }
+
+        // Establish connection
+        try (Connection connection = DriverManager.getConnection(url)) {
+            System.out.println("Connection object: " + connection);
+        } catch (SQLException e) {
+            System.out.println("Error connecting to database: " + e.getMessage());
+        }
+    }
+}
+
+
+Output:
+
+
+Connection object: org.sqlite.jdbc4.JDBC4Connection@1b6dfe9
+
+

@@ -1,0 +1,35 @@
+
+Task 3: New IO (NIO)
+Use NIO Channels and Buffers to read content from a file and write to another file.
+
+Solution:
+
+import java.io.IOException;
+import java.nio.channels.FileChannel;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
+import java.nio.ByteBuffer;
+
+public class NIOExample {
+	public static void main(String[] args) throws IOException {
+		// Input file
+		Path inputFile = Paths.get("input.txt");
+
+		// Output file
+		Path outputFile = Paths.get("output.txt");
+
+		// Read from input file
+		FileChannel inputChannel = FileChannel.open(inputFile, StandardOpenOption.READ);
+		ByteBuffer buffer = ByteBuffer.allocate((int) inputChannel.size());
+		inputChannel.read(buffer);
+		inputChannel.close();
+
+		// Write to output file
+		FileChannel outputChannel = FileChannel.open(outputFile, StandardOpenOption.WRITE, StandardOpenOption.CREATE);
+		buffer.flip();
+		outputChannel.write(buffer);
+		outputChannel.close();
+	}
+}
+

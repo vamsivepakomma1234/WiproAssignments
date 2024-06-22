@@ -1,0 +1,95 @@
+Task 2: Extend the above JUnit tests to use @Before, @After, @BeforeClass, and @AfterClass annotations to manage test setup and teardown.
+
+Solution:
+
+
+
+import org.junit.jupiter.api.After;
+import org.junit.jupiter.api.AfterClass;
+import org.junit.jupiter.api.Before;
+import org.junit.jupiter.api.BeforeClass;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+public class MathOperationsTest {
+
+    private MathOperations mathOperations;
+
+    @BeforeClass
+    public static void beforeClass() {
+        System.out.println("Before Class");
+    }
+
+    @AfterClass
+    public static void afterClass() {
+        System.out.println("After Class");
+    }
+
+    @Before
+    public void beforeEachTest() {
+        mathOperations = new MathOperations();
+        System.out.println("Before Each Test");
+    }
+
+    @After
+    public void afterEachTest() {
+        System.out.println("After Each Test");
+    }
+
+    @Test
+    public void testAdd() {
+        assertEquals(4, mathOperations.add(2, 2));
+    }
+
+    @Test
+    public void testSubtract() {
+        assertEquals(0, mathOperations.subtract(2, 2));
+    }
+
+    @Test
+    public void testMultiply() {
+        assertEquals(4, mathOperations.multiply(2, 2));
+    }
+
+    @Test
+    public void testDivide() {
+        assertEquals(1, mathOperations.divide(2, 2));
+    }
+}
+
+class MathOperations {
+    int add(int a, int b) {
+        return a + b;
+    }
+
+    int subtract(int a, int b) {
+        return a - b;
+    }
+
+    int multiply(int a, int b) {
+        return a * b;
+    }
+
+    int divide(int a, int b) {
+        return a / b;
+    }
+}
+
+
+Output:
+
+
+Before Class
+Before Each Test
+After Each Test
+Before Each Test
+After Each Test
+Before Each Test
+After Each Test
+Before Each Test
+After Each Test
+After Class
+All tests passed!
+
+
+

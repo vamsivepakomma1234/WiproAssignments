@@ -1,0 +1,116 @@
+Task 5: Java Networking and Serialization
+Develop a basic TCP client and server application where the client sends a serialized object with 2 numbers and operation  to be performed on them to the server, and the server computes the result and sends it back to the client. for eg, we could send  2, 2, ""+"" which would mean 2 + 2
+
+
+Solution:
+
+
+
+import (link unavailable)*;
+import (link unavailable)*;
+
+public class TCPServer {
+	public static void main(String[] args) throws Exception {
+		ServerSocket serverSocket = new ServerSocket(8080);
+		System.out.println("Server started. Listening for incoming connections...");
+
+		Socket socket = serverSocket.accept();
+		System.out.println("Incoming connection accepted.");
+
+		InputStream inputStream = socket.getInputStream();
+		OutputStream outputStream = socket.getOutputStream();
+
+		// Deserialize object
+		ObjectInputStream objectInputStream = new ObjectInputStream(inputStream);
+		Calculation calculation = (Calculation) objectInputStream.readObject();
+
+		// Perform calculation
+		int result = 0;
+		switch (calculation.getOperation()) {
+			case "+":
+				result = calculation.getNum1() + calculation.getNum2();
+				break;
+			case "-":
+				result = calculation.getNum1() - calculation.getNum2();
+				break;
+			case "*":
+				result = calculation.getNum1() * calculation.getNum2();
+				break;
+			case "/":
+				result = calculation.getNum1() / calculation.getNum2();
+				break;
+		}
+
+		// Serialize result
+		ObjectOutputStream objectOutputStream = new ObjectOutputStream(outputStream);
+		objectOutputStream.writeObject(result);
+
+		socket.close();
+		serverSocket.close();
+	}
+}
+
+class Calculation implements Serializable {
+	private int num1;
+	private int num2;
+	private String operation;
+
+	public Calculation(int num1, int num2, String operation) {
+		this.num1 = num1;
+		this.num2 = num2;
+		this.operation = operation;
+	}
+
+	public int getNum1() {
+		return num1;
+	}
+
+	public int getNum2() {
+		return num2;
+	}
+
+	public String getOperation() {
+		return operation;
+	}
+}
+
+
+Client Side
+
+
+import (link unavailable)*;
+import (link unavailable)*;
+
+public class TCPClient {
+	public static void main(String[] args) throws Exception {
+		Socket socket = new Socket("localhost", 8080);
+		System.out.println("Connected to server.");
+
+		InputStream inputStream = socket.getInputStream();
+		OutputStream outputStream = socket.getOutputStream();
+
+		// Create calculation object
+		Calculation calculation = new Calculation(2, 2, "+");
+
+		// Serialize object
+		ObjectOutputStream objectOutputStream = new ObjectOutputStream(outputStream);
+		objectOutputStream.writeObject(calculation);
+
+		// Deserialize result
+		ObjectInputStream objectInputStream = new ObjectInputStream(inputStream);
+		int result = (int) objectInputStream.readObject();
+
+		System.out.println("Result: " + result);
+
+		socket.close();
+	}
+}
+
+
+Output:
+
+
+Server started. Listening for incoming connections...
+Incoming connection accepted.
+Result: 4
+

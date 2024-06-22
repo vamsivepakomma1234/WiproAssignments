@@ -1,0 +1,85 @@
+Task 2: Factory Method
+Create a ShapeFactory class that encapsulates the object creation logic of different Shape objects like Circle, Square, and Rectangle.
+
+Solution:
+
+
+abstract class Shape {
+    abstract double area();
+}
+
+class Circle extends Shape {
+    private double radius;
+
+    public Circle(double radius) {
+        this.radius = radius;
+    }
+
+    double area() {
+        return Math.PI * radius * radius;
+    }
+}
+
+class Square extends Shape {
+    private double side;
+
+    public Square(double side) {
+        this.side = side;
+    }
+
+    double area() {
+        return side * side;
+    }
+}
+
+class Rectangle extends Shape {
+    private double length;
+    private double width;
+
+    public Rectangle(double length, double width) {
+        this.length = length;
+        this.width = width;
+    }
+
+    double area() {
+        return length * width;
+    }
+}
+
+class ShapeFactory {
+    public static Shape createShape(String shapeType, double... parameters) {
+        if (shapeType == null) {
+            return null;
+        }
+        if (shapeType.equalsIgnoreCase("Circle")) {
+            return new Circle(parameters[0]);
+        } else if (shapeType.equalsIgnoreCase("Square")) {
+            return new Square(parameters[0]);
+        } else if (shapeType.equalsIgnoreCase("Rectangle")) {
+            return new Rectangle(parameters[0], parameters[1]);
+        }
+        return null;
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Shape circle = ShapeFactory.createShape("Circle", 5.0);
+        Shape square = ShapeFactory.createShape("Square", 4.0);
+        Shape rectangle = ShapeFactory.createShape("Rectangle", 3.0, 5.0);
+
+        System.out.println("Circle area: " + circle.area());
+        System.out.println("Square area: " + square.area());
+        System.out.println("Rectangle area: " + rectangle.area());
+    }
+}
+
+
+Output:
+
+
+Circle area: 78.53981633974483
+Square area: 16.0
+Rectangle area: 15.0
+
+

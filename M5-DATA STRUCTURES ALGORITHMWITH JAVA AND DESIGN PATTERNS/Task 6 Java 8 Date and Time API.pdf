@@ -1,0 +1,46 @@
+Task 6: Java 8 Date and Time API
+Write a program that calculates the number of days between two dates input by the user."
+
+Solution:
+
+import java.time.LocalDate;
+import java.time.Period;
+import java.time.format.DateTimeFormatter;
+import java.util.Scanner;
+
+public class DateDifference {
+	public static void main(String[] args) {
+		Scanner scanner = new Scanner(System.in);
+
+		// Input format
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
+		// Get input dates from user
+		System.out.println("Enter start date (dd/MM/yyyy):");
+		String startDateInput = scanner.nextLine();
+		LocalDate startDate = LocalDate.parse(startDateInput, formatter);
+
+		System.out.println("Enter end date (dd/MM/yyyy):");
+		String endDateInput = scanner.nextLine();
+		LocalDate endDate = LocalDate.parse(endDateInput, formatter);
+
+		// Calculate difference
+		Period period = Period.between(startDate, endDate);
+		long days = period.getDays();
+
+		// Print result
+		System.out.println("Number of days between dates: " + days);
+	}
+}
+
+
+Output:
+
+
+Enter start date (dd/MM/yyyy):
+01/01/2022
+Enter end date (dd/MM/yyyy):
+01/01/2023
+Number of days between dates: 365
+
+

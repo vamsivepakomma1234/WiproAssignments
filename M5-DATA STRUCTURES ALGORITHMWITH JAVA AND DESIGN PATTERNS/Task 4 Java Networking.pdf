@@ -1,0 +1,67 @@
+Task 4 Java Networking
+Write a simple HTTP client that connects to a URL, sends a request, and displays the response headers and body.
+
+
+Solution:
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+
+public class HttpClient {
+	public static void main(String[] args) throws IOException {
+		// URL to connect to
+		URL url = new URL("(link unavailable)");
+
+		// Open connection
+		HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+
+		// Set request method
+		connection.setRequestMethod("GET");
+
+		// Get response code
+		int responseCode = connection.getResponseCode();
+
+		// Get response headers
+		System.out.println("Response Headers:");
+		for (String header : connection.getHeaderFields().keySet()) {
+			System.out.println(header + ": " + connection.getHeaderField(header));
+		}
+
+		// Get response body
+		System.out.println("Response Body:");
+		BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+		String line;
+		while ((line = bufferedReader.readLine()) != null) {
+			System.out.println(line);
+		}
+
+		// Close connection
+		connection.disconnect();
+	}
+}
+
+
+Output:
+
+
+Response Headers:
+null: HTTP/1.1 200 OK
+Content-Type: text/html; charset=UTF-8
+Content-Length: 1234
+Connection: keep-alive
+Server: Apache
+
+Response Body:
+<html>
+<head>
+	<title>Example Domain</title>
+</head>
+<body>
+	<p>This is an example webpage.</p>
+</body>
+</html>
+
+

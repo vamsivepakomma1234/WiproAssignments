@@ -1,0 +1,51 @@
+Task 2: Serialization and Deserialization
+Serialize a custom object to a file and then deserialize it back to recover the object state.
+
+
+Solution:
+
+
+
+class Person implements Serializable {
+	String name;
+	int age;
+
+	public Person(String name, int age) {
+		this.name = name;
+		this.age = age;
+	}
+
+	public String toString() {
+		return "Person{" +
+				"name='" + name + '\'' +
+				", age=" + age +
+				'}';
+	}
+}
+
+public class SerializationExample {
+	public static void main(String[] args) throws IOException, ClassNotFoundException {
+		// Create a custom object
+		Person person = new Person("John", 30);
+
+		// Serialize the object to a file
+		FileOutputStream fileOutputStream = new FileOutputStream("person.ser");
+		ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
+		objectOutputStream.writeObject(person);
+		objectOutputStream.close();
+
+		// Deserialize the object from the file
+		FileInputStream fileInputStream = new FileInputStream("person.ser");
+		ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
+		Person deserializedPerson = (Person) objectInputStream.readObject();
+		objectInputStream.close();
+
+		// Print the deserialized object
+		System.out.println(deserializedPerson);
+	}
+}
+
+
+Output:
+
+Person{name='John', age=30}

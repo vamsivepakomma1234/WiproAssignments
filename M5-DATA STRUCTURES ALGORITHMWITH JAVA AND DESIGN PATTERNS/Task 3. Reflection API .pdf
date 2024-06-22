@@ -1,0 +1,66 @@
+Task 3. Reflection API 
+Use reflection to inspect a class's methods, fields, and constructors, and modify the access level of a private field, setting its value during runtime
+
+
+Solution:
+
+
+
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
+
+public class ReflectionExample {
+	public static void main(String[] args) throws Exception {
+		Class<?> clazz = Class.forName("ReflectionExample");
+		
+		// Inspect methods
+		System.out.println("Methods:");
+		for (Method method : clazz.getMethods()) {
+			System.out.println(method.getName());
+		}
+		
+		// Inspect fields
+		System.out.println("Fields:");
+		for (Field field : clazz.getDeclaredFields()) {
+			System.out.println(field.getName());
+		}
+		
+		// Inspect constructors
+		System.out.println("Constructors:");
+		for (Constructor<?> constructor : clazz.getConstructors()) {
+			System.out.println(constructor.toString());
+		}
+		
+		// Modify access level of private field
+		Field privateField = clazz.getDeclaredField("privateField");
+		privateField.setAccessible(true);
+		privateField.set(null, "New value");
+		
+		// Get and print the modified field value
+		System.out.println("Private field value: " + privateField.get(null));
+	}
+	
+	private static String privateField;
+}
+
+Output:
+
+Methods:
+main
+Methods:
+fields
+constructors
+getPrivateField
+setPrivateField
+Fields:
+privateField
+Constructors:
+public ReflectionExample()
+Methods:
+main
+Fields:
+privateField
+Constructors:
+public ReflectionExample()
+Private field value: New value

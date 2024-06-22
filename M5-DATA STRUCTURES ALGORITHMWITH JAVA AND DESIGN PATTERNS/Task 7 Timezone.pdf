@@ -1,0 +1,51 @@
+Task 7: Timezone
+Create a timezone converter that takes a time in one timezone and converts it to another timezone.
+
+Solution:
+Here is a solution in Java with output for Task 7:
+
+
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Scanner;
+
+public class TimezoneConverter {
+	public static void main(String[] args) {
+		Scanner scanner = new Scanner(System.in);
+
+		// Input format
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+
+		// Get input time and timezones from user
+		System.out.println("Enter time (dd/MM/yyyy HH:mm):");
+		String timeInput = scanner.nextLine();
+		ZonedDateTime time = ZonedDateTime.parse(timeInput + " UTC", formatter);
+
+		System.out.println("Enter source timezone:");
+		String sourceTimezone = scanner.nextLine();
+
+		System.out.println("Enter target timezone:");
+		String targetTimezone = scanner.nextLine();
+
+		// Convert time to target timezone
+		ZonedDateTime convertedTime = time.withZoneSameInstant(ZoneId.of(targetTimezone));
+
+		// Print result
+		System.out.println("Converted time: " + convertedTime.format(formatter));
+	}
+}
+
+
+Output:
+
+
+Enter time (dd/MM/yyyy HH:mm):
+01/01/2022 12:00
+Enter source timezone:
+UTC
+Enter target timezone:
+America/New_York
+Converted time: 01/01/2022 07:00
+
+

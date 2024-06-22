@@ -1,0 +1,51 @@
+Task 4: Lambda Expressions
+Implement a Comparator for a Person class using a lambda expression, and sort a list of Person objects by their age..
+
+Solution:
+
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+
+class Person {
+	String name;
+	int age;
+
+	public Person(String name, int age) {
+		this.name = name;
+		this.age = age;
+	}
+
+	public String toString() {
+		return "Person{" +
+				"name='" + name + '\'' +
+				", age=" + age +
+				'}';
+	}
+}
+
+public class LambdaComparator {
+	public static void main(String[] args) {
+		List<Person> people = new ArrayList<>();
+		people.add(new Person("John", 30));
+		people.add(new Person("Jane", 25));
+		people.add(new Person("Bob", 40));
+
+		// Implement Comparator using lambda expression
+		Comparator<Person> comparator = (p1, p2) -> Integer.compare(p1.age, p2.age);
+
+		// Sort list of Person objects by age
+		people.sort(comparator);
+
+		// Print sorted list
+		for (Person person : people) {
+			System.out.println(person);
+		}
+	}
+}
+
+Output:
+
+Person{name='Jane', age=25}
+Person{name='John', age=30}
+Person{name='Bob', age=40}
